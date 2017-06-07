@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="http://scmstatic.loongjoy.com/plugins/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="http://scmstatic.loongjoy.com/plugins/bootstrap/dist/css/bootstrap.css">
+  <script type="text/javascript" src="http://scmstatic.loongjoy.com/plugins/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="http://scmstatic.loongjoy.com/plugins/bootstrap/dist/js/bootstrap.js"></script>
+  <script type="text/javascript" src="http://scmstatic.loongjoy.com/plugins/js-cookie/dist/js.cookie.js"></script>
+  <link rel="stylesheet" href="http://scmstatic.loongjoy.com/v1/app.css">
+  <link rel="stylesheet" type="text/css" href="http://scmstatic.loongjoy.com/plugins/bootstrap-select/dist/css/bootstrap-select.css">
+  <script type="text/javascript" src="http://scmstatic.loongjoy.com/plugins/bootstrap-select/dist/js/bootstrap-select.js"></script>
+  <script src="http://scmstatic.loongjoy.com/plugins/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
+  <script src="http://scmstatic.loongjoy.com/plugins/jQuery-File-Upload/js/jquery.iframe-transport.js"></script>
+  <script src="http://scmstatic.loongjoy.com/plugins/jQuery-File-Upload/js/jquery.fileupload.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://scmstatic.loongjoy.com/plugins/jQuery-File-Upload/css/jquery.fileupload.css">
+  <link rel="stylesheet" type="text/css" href="http://scmstatic.loongjoy.com/plugins/jQuery-File-Upload/css/jquery.fileupload-ui.css">
+</head>
+
+<body>
+  <form class="w-form" action="http://scmship.loongjoy.com/zh/so/add" m-bind="ajax">
+
+    <input type="hidden" name="_token" value="BolyrWfD6bfEtKG2vKWc8YOtNJ28wnFQ0XxJIlwd">
+
+    <div class="w-form-row">
+      <div class="w-form-label required">SA或RMA</div>
+      <div class="w-form-cont">
+        <input type="text" class="w-ipt sa" name="SA" placeholder="">
+      </div>
+    </div>
+
+    <div class="w-form-row">
+      <div class="w-form-label required">发货仓库</div>
+      <div class="w-form-cont">
+        <select name="from" id="departure">
+          <option value="0">请选择发货仓库</option>
+        </select>
+      </div>
+    </div>
+    <div class="w-form-row">
+      <div class="w-form-label required">目的仓库</div>
+      <div class="w-form-cont">
+        <select name="to" id="destination" class="w-ipt">
+          <option value="0">请选择收货仓库</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="w-form-row">
+      <div class="w-form-label">
+        批量上传PN
+      </div>
+      <div class="w-form-cont">
+        <span class="btn btn-success fileinput-button">
+	            <i class="glyphicon glyphicon-plus">
+	            </i>
+	            <span>
+	                文件上传
+	            </span>
+        <input type="file" name="file" id="fileupload">
+        </span>
+        <a translate="uploadTemplateDownload" href="http://scmstatic.loongjoy.com/upload_template/shipping/SO_uploadPN.xlsx" class="ng-scope">上传模版下载</a>
+      </div>
+    </div>
+
+    <div class="w-form-row">
+      <div class="w-form-label required">备件</div>
+      <div class="w-form-cont">
+        <div class="w-table hack">
+          <table id="pnList">
+            <thead>
+              <tr>
+                <th>备件编号</th>
+                <th>品牌</th>
+                <th>数量</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="newPart">
+                <td>
+                  <select name="to" id="searchPN">
+                    <option value="">请选择</option>
+                  </select>
+                </td>
+                <td class="brand"></td>
+                <td>
+                  <input class="partNum w-ipt" type="text" name="number" placeholder="">
+                </td>
+                <td>
+                  <i class="fa fa-plus-circle"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-form-row">
+      <div class="w-form-label required">产品属性</div>
+      <div class="w-form-cont">
+        <select name="stockProductAttr" class="w-ipt long">
+          <option value="0">请选择产品属性</option>
+                                        <option value="1">好件</option>
+                              <option value="2">坏件</option>
+                              <option value="3">问题件</option>
+                              <option value="4">报废件</option>
+                              <option value="5">样品件</option>
+                            </select>
+      </div>
+    </div>
+
+    <div class="w-form-row">
+      <div class="w-form-label required">质保状态</div>
+      <div class="w-form-cont">
+        <select name="warrantyStatus" class="w-ipt long">
+          <option value="0">请选择质保状态</option>
+                                        <option value="1">保外</option>
+                              <option value="2">保内</option>
+                            </select>
+      </div>
+    </div>
+
+    <div class="w-form-row">
+      <div class="w-form-label"></div>
+      <div class="w-form-cont">
+        <button type="submit" class="w-btn w-btn-primary">提交</button>
+        <a href="javascript:history.back();" class="w-btn">返回</a>
+      </div>
+    </div>
+  </form>
+</body>
+
+</html>
+<script>
+  $(document).ready(function () {
+    var lang = 'zh';
+    var token = '37b67342a3309084c549fc7487018f19';
+    var totalPN = []; // pn列表
+    var searchPN; // 搜索出的pn
+    var newPart; // 新增的pn
+
+    // 若Array.isArray不存在，则创建该方法
+    if (!Array.isArray) {
+      Array.isArray = function (arg) {
+        return Object.prototype.toString.call(arg) === '[object Array]';
+      };
+    }
+    // 生成options
+    function _creatOptions(data) {
+      var options = '';
+      for (var index = 0; index < data.length; index++) {
+        var name;
+        var id;
+        var item = data[index];
+        if (item.wmsName) {
+          name = JSON.parse(item.wmsName)[lang];
+        } else if (item.value) {
+          name = item.value;
+        } else {
+          name = item.partNumber;
+        }
+        if (item.id) {
+          id = item.id;
+        } else {
+          id = item.key;
+        }
+        options += '<option value="' + id + '" data-tokens="' + name + '">' + name + '</option>';
+      }
+      return options;
+    }
+
+    // 生成PN列表
+    function _creatPNList() {
+      var tr = '';
+      for (var index = 0; index < totalPN.length; index++) {
+        var item = totalPN[index];
+        if (item.brandName.indexOf('{') > -1 && item.brandName.indexOf('}') > -1) {
+          item.brandName = JSON.parse(item.brandName)[lang];
+        }
+        tr += '<tr class="item" part-id="' + item.partId + '"><td>' + item.PN + '</td><td>' +
+          item.brandName + '</td><td>' +
+          '<input type="text" value="' + item.number + '" class="w-ipt partNum"></td>' +
+          '<td><i class="fa fa-minus-circle"></i></td></tr>';
+      }
+      $('#pnList tbody').children('tr.item').remove();
+      $('#pnList tbody').append(tr);
+    }
+
+    // 合并pn
+    function _mergePN(source) {
+      if (totalPN.length === 0) {
+        totalPN.push(source);
+      } else {
+        for (var i = 0; i < totalPN.length; i++) {
+          var item = totalPN[i];
+          if (source.partId === item.partId) {
+            item.number = parseInt(source.number, 10) + parseInt(item.number, 10);
+            source.hasAdd = true;
+          }
+        }
+        if (!source.hasAdd) {
+          totalPN.push(source);
+        }
+      }
+      _creatPNList();
+    }
+
+    function _getDestination(departureId, foo) {
+      $('#destination').html('<option>请选择</option>');
+      if (departureId || departureId === 0) {
+        // 获取目的仓库
+        $.get('/scmship.loongjoy.com/api/common-towms', {
+          fromSys: 'scmpcapp',
+          lang: 'zh',
+          token: token,
+          from: departureId,
+          pageIndex: 1,
+          pageSize: 20
+        }, function (res) {
+          if (!res.status) {
+            $('#destination').append(_creatOptions(res.data));
+            if (foo) {
+              foo();
+            }
+          } else {
+            alert(res.message);
+          }
+        });
+      }
+    }
+
+    // 初始化上传
+    function _creatUploader() {
+      var departureId = $('#departure').val();
+      var destinationId = $('#destination').val();
+      if (departureId !== 0 && destinationId !== 0) {
+        var url = 'http://scmship.loongjoy.com/api/upload-pn-parts?token=' + token +
+          '&fromSys=scmpcapp&lang=zh&departureWarehouseId=' + departureId +
+          '&destinationWarehouseId=' + destinationId;
+        $('#fileupload').fileupload({
+          dataType: 'json',
+          url: url,
+          type: 'POST',
+          singleFileUploads: false, //多文件上传
+          done: function (e, data) {
+            for (var index = 0; index < data.result.data.length; index++) {
+              _mergePN(data.result.data[index]);
+            }
+          }
+        });
+      } else {
+        alert('请选仓库');
+      }
+    }
+
+    // 获取发货仓库
+    $.get('/scmbase.loongjoy.com/api/public/getWms', {
+      fromSys: 'scmpcapp',
+      lang: 'zh',
+      token: token,
+      wmsType: 'all'
+    }, function (res) {
+      if (!res.status) {
+        $('#departure').append(_creatOptions(res.data));
+        $('#departure').selectpicker({
+          liveSearch: true,
+          size: 10
+        })
+      }
+    });
+
+    // 发货仓库
+    $('#departure').on('changed.bs.select', function (e) {
+      _getDestination($(this).val());
+      _creatUploader();
+    });
+
+    // 目的仓库下拉框
+    $('#destination').on('change', function (e) {
+      _creatUploader();
+    });
+
+    // 删除pn
+    $('#pnList tbody').on('click', 'i.fa-minus-circle', function () {
+      var deletePartId = $(this).parents('tr').attr('part-id');
+      for (var i = 0; i < totalPN.length; i++) {
+        if (totalPN[i].partId === parseInt(deletePartId, 10)) {
+          $(this).parents('tr').remove();
+          totalPN.splice(i, 1);
+          return;
+        }
+      }
+
+    });
+
+    // 初始化备件搜索下拉框
+    $('#searchPN').selectpicker({
+      liveSearch: true,
+      size: 10,
+      container: 'body',
+      liveSearchPlaceholder: '输入PN编号搜索',
+      noneSelectedText: '输入PN编号搜索'
+    });
+
+    // 备件搜索下拉框选中事件
+    $('#searchPN').on('changed.bs.select', function (e) {
+      var selectedPartId = $(this).val();
+      for (var index = 0; index < searchPN.length; index++) {
+        var item = searchPN[index];
+        if (parseInt(selectedPartId, 10) === item.id) {
+          $('#newPart .brand').text(item.brandName);
+          $('#newPart input.partNum').val(1);
+          $('#newPart .fa.fa-plus-circle').attr('part-info', JSON.stringify(item));
+          return;
+        }
+      }
+    });
+
+    // 备件新增
+    $('.fa-plus-circle').click(function () {
+      var newPartInfo = JSON.parse($(this).attr('part-info'));
+      newPart = {
+        partId: newPartInfo.id,
+        number: $(this).parents('#newPart').find('.partNum').val(),
+        description: newPartInfo.desc,
+        brandName: newPartInfo.brandName,
+        brandId: newPartInfo.brandId,
+        PN: newPartInfo.partNumber
+      }
+      _mergePN(newPart);
+    });
+
+
+    $('body')
+      // 备件搜索下拉框内的搜索
+      .on('keyup', '.bs-container.bootstrap-select.open .dropdown-menu input', function () {
+        var val_input = $(this).val();
+        var params = {};
+        if (val_input) {
+          params.partNumber = val_input.trim();
+          params.lang = lang;
+          params.fromSys = 'scmship';
+          params.token = token;
+          var url = '/scmbase.loongjoy.com/api/phone/getPartDetail';
+          $.get(url, params, function (res) {
+            if (!res.status && res.data) {
+              searchPN = res.data;
+              $('#searchPN').html('<option>请选择</option>' + _creatOptions(res.data));
+              $('#searchPN').selectpicker('refresh');
+            }
+          });
+        }
+      })
+      // 编辑数量
+      .on('blur', '#pnList tr.item input.partNum', function () {
+        var partId = $(this).parents('tr.item').attr('part-id');
+        var num = $(this).val();
+        for (var l = 0; l < totalPN.length; l++) {
+          if (totalPN[l].partId === parseInt(partId, 10)) {
+            totalPN[l].number = parseInt(num, 10);
+            return;
+          }
+        }
+      });
+
+    // SA
+    $('input[name="SA"]').blur(function () {
+      if ($(this).val()) {
+        $.get('http://scmship.loongjoy.com/api/getpns', {
+          SA: $(this).val(),
+          token: token
+        }, function (res) {
+          if (!res.status) {
+            $('#departure').selectpicker('val', res.data.departureWarehouseId);
+            _getDestination(res.data.departureWarehouseId, function () {
+              $('#destination').find('option[value="' + res.data.destinationWarehouseId + '"]').attr("selected", "selected");
+            });
+            totalPN = res.data.item;
+            _creatPNList();
+            $('[name="stockProductAttr"]').val(res.data.stockProductAttr);
+            $('[name="warrantyStatus"]').val(res.data.warrantyStatus);
+          }
+        });
+      }
+    });
+
+
+  });
+
+</script>
