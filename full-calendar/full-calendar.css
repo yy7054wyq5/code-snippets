@@ -1,0 +1,84 @@
+.fullCalendar{
+	margin: 20px 0;
+	}
+.row.full-calendar{
+	margin-right:0px;
+	border-right:1px solid #fceee7;
+	border-bottom:1px solid #fceee7;
+}
+.row.full-calendar .month.default{
+	border-left: 1px solid #fceee7;
+	border-top: 1px solid #fceee7;
+	min-height: 320px;
+}
+.row.full-calendar .monthName{
+	width: 40px;
+	height: 40px;
+	background: #ffbb00;
+	color: #fff;
+	line-height: 40px;
+	margin-left: -15px;
+}
+.row.full-calendar .week div{
+	width: 13%;
+	text-align: center;
+	float: left;
+	height: 30px;
+	line-height: 30px;
+	border-bottom:1px solid #e9e9e9;
+}
+.row.full-calendar .day{
+	position:relative;
+	width: 13%;
+	float: left;
+	background: #fafafa;
+	text-align: center;
+	cursor: pointer;
+	text-decoration: none;
+	border-right: 1px solid #e9e9e9;
+	border-bottom: 1px solid #e9e9e9;
+	height: 40px;
+	line-height: 20px;
+}
+.row.full-calendar .days{
+	border-left: 1px solid #e9e9e9;
+}
+.row.full-calendar .clear:after{
+	content: "."; 
+	display: block; 
+	height: 0; 
+	clear: both; 
+	visibility: hidden;
+}
+.row.full-calendar .day[data-time="NaN"]{
+	background: #fff;
+}
+.row.full-calendar .day .closed{
+	position:absolute;
+	right:-2px;
+	top:-7px;
+	width:12px;
+	height:12px;
+	display: none;
+}
+.row.full-calendar .day .closed img{
+	width: 100%;
+}
+.row.full-calendar .day i{
+	font-style: normal;
+	width:100%;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	display: inline-block;
+}
+.row.full-calendar .day.chose{
+	color: #fff;
+	background: #ff7800;
+}
+.row.full-calendar .day.chose:hover s{
+	display:block;
+}
+.row.full-calendar .month{
+	text-align: center;
+}

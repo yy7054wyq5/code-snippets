@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="http://scmstatic.loongjoy.com/plugins/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="full-calendar.css">
+	<script type="text/javascript" src="http://scmstatic.loongjoy.com/plugins/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="http://scmstatic.loongjoy.com/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="http://scmstatic.loongjoy.com/plugins/layer-v2.4/layer/layer.js"></script>
+	<script type="text/javascript" src="full-calendar.js"></script>
+</head>
+<body>
+	<div class="container">
+		<select name="year">
+			<option value="2014">2014</option>
+			<option value="2015">2015</option>
+			<option value="2016" selected="selected">2016</option>
+		</select>
+		<div class="fullCalendar"></div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	$(function() {
+		var hol={};
+		function applyData(url){
+			$.get(url,{countryId:1,year:2016},function(data){
+					console.log(data);
+					hol=data;
+			})
+		}
+		// $.get("http://scmbase.m.com/en/zone/countryholidaydata",{countryId:1,year:2016},
+		// function(data){
+		// 	console.log(data);
+		// 	//测试数据
+		// });
+	  hol={
+			status: "success",
+			// msg: "Get Data Success",
+			// holidays: {
+			// 	1475942400: {
+			// 		id: 1,
+			// 		countryId: 1,
+			// 		name: "重阳节",
+			// 		dayTimestamp: 1475942400,
+			// 		month: 10,
+			// 		year: 2016,
+			// 		createTime: "2016-10-09 00:00:00",
+			// 		updateTime: "2016-10-09 16:01:14",
+			// 		createUserId: null,
+			// 		deleted: 0,
+			// 		enabled: 1
+			// 	},
+			// 	1476028800: {
+			// 		id: 2,
+			// 		countryId: 1,
+			// 		name: "双十节",
+			// 		dayTimestamp: 1476028800,
+			// 		month: 10,
+			// 		year: 2016,
+			// 		createTime: "2016-10-10 00:00:00",
+			// 		updateTime: "2016-10-09 15:59:19",
+			// 		createUserId: null,
+			// 		deleted: 0,
+			// 		enabled: 1
+			// 	}
+			// }
+		}
+		console.log(hol.holidays)
+
+		//点击提交按钮的函数
+		function editHol(obj){//obj:编辑假日的对象数组
+			$.get("",obj);
+		};
+
+		$('.fullCalendar').fullCalendar({//进入页面，第一次渲染页面
+			year: $('select[name="year"]').val(),
+			holiday:hol.holidays,
+			fn:editHol
+		});
+
+		
+		//切换年份时，重新渲染页面
+		$('select[name="year"]').change(function(event) {
+			var year = $(this).val();
+			location.href = $(this).data('href');
+			// $.get("",{countryId:1,year:year},function(data){//请求地址
+			// 	$('.fullCalendar').fullCalendar({
+			// 		year: year,
+			// 		holiday:data.holidays,
+			// 		fn:editHol
+			// 	});
+			// })
+		});	
+	});
+</script>
