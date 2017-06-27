@@ -101,11 +101,13 @@ function _getDom(classname) {
 
 function _cutDisplayStyle(styleStr) {
   if (styleStr) {
-    var arr = styleStr.split(';').map(function (i) {
-      if (i === 'display: block' || i === 'display: none') {
-        return undefined;
-      }
-    });
+    var arr = styleStr.split(';')
+      .map(function (i) {
+        if (i === 'display: block' || i === 'display: none') {
+          return undefined;
+        }
+      });
+      
     arr.filter(function (value) {
       if (value) {
         return value;
@@ -126,7 +128,7 @@ function _cutDisplayStyle(styleStr) {
 
 function _show(dom) {
   var oldStyle = dom.getAttribute('style');
-  dom.setAttribute('style', _cutDisplayStyle(oldStyle) + 'display: block;');
+  dom.setAttribute('style', _cutDisplayStyle(oldStyle) + ';display: block;');
 }
 
 /*
@@ -134,7 +136,7 @@ function _show(dom) {
 */
 function _hide(dom) {
   var oldStyle = dom.getAttribute('style');
-  dom.setAttribute('style', _cutDisplayStyle(oldStyle) + 'display: none;');
+  dom.setAttribute('style', _cutDisplayStyle(oldStyle) + ';display: none;');
 }
 
 
@@ -147,10 +149,15 @@ function layout() {
   var mobile = _getDom('mobile');
   var pcHackTop = _getDom('pc-hack-top');
   var pcHackBottom = _getDom('pc-hack-bottom');
-  if (window.innerWidth <= 768) {
+  var mobileHack = _getDom('mobile-hack');
+  var mobileContent = _getDom('mobile-content');
+  var mobileImg = _getDom('mobile-img');
+  if (window.innerWidth <= 1000) {
     document.body.className = 'mobile-body';
     _hide(pc);
     _show(mobile);
+    var height = window.innerHeight - mobileHack.clientHeight - mobileImg.clientHeight;
+    mobileContent.setAttribute('style' , 'height:' + height + 'px');
   } else {
     document.body.className = 'pc-body';
     _show(pc);
@@ -168,7 +175,7 @@ function layout() {
 
 function htmlFontSize() {
   var html = document.getElementsByTagName('html')[0];
-  if (window.innerWidth > 768) {
+  if (window.innerWidth > 1000) {
     html.removeAttribute('style');
     return;
   }
