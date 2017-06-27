@@ -1,0 +1,88 @@
+/*翻页*/
+.page-action{
+  width: 650px;
+  height: 37px;
+  padding-bottom: 8px;
+  margin-top: 10px;
+  a,span{
+    display: block;
+    float: left;
+    padding: 5px 10px;
+    font-size: 12px;
+    background: #fbe7db;
+    border: solid 1px #e07729;
+    color: #ff6000;
+    margin-left: 5px;
+  }
+  a{
+      .page-up.nopage,
+      .page-down.nopage{
+        display: none;
+      }
+  }
+  a:hover{
+      background: #fff;
+  }
+  a.active{
+      background: #fff;
+      
+  }
+  input{
+      display: block;
+      text-align: center;
+      float: left;
+      border: solid 1px #e07729;
+      width: 30px;
+      padding: 3px 0 3px 0;
+      line-height: 22px;
+      padding-top: 2px;
+      *height: 22px;
+      margin-left: 5px;
+  }
+  a.btn{
+      background: #e6e6e6;
+      border-radius: 0;
+  }
+  a.btn:hover{
+      background: #fff;
+      color: #ff6000;
+  }
+}
+.page-action span{
+    border:0; 
+    background: transparent;
+    line-height: 30px;
+    padding: 0;
+}
+ /*白色翻页*/
+ .page-action.white{
+    a{
+        background: #fff;
+        color: #7d7d7d;
+        border: solid 1px #c2c2c2;
+        border-radius: 3px;
+        .page-up.nopage,
+        .page-down.nopage{
+            display: none;
+        }
+    }
+    a:hover,a.active{
+      color:#ff6e00;
+      background: #fff;
+      border: 1px solid #ff6e00;
+    }
+    input{
+      border: solid 1px #c2c2c2;
+     }
+     a.btn{
+       border-radius: 0;
+       background: #fff;
+     }
+     a.btn:hover{
+        border: solid 1px #c2c2c2;
+        background-color: #e6e6e6;
+     }
+     span{
+       color: #7d7d7d;
+     }
+ }
