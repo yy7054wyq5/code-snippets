@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/yy7054wyq5/code-snippets#readme",
   "devDependencies": {
-    "eslint": "^4.1.1"
+    "eslint": "^4.1.1",
+    "eslint-config-google": "^0.8.0"
   }
 }
