@@ -91,8 +91,9 @@ if (!Array.prototype.filter) {
 /*
 * 获取dom
 */
-function _getDom(classname) {
-  return document.getElementsByClassName(classname)[0];
+function $(classname) {
+  this.dom = document.getElementsByClassName(classname)[0];
+ 
 }
 
 /*
@@ -126,17 +127,17 @@ function _cutDisplayStyle(styleStr) {
 * 显示
 */
 
-function _show(dom) {
-  var oldStyle = dom.getAttribute('style');
-  dom.setAttribute('style', _cutDisplayStyle(oldStyle) + ';display: block;');
+function show() {
+  var oldStyle = this.getAttribute('style');
+  this.setAttribute('style', _cutDisplayStyle(oldStyle) + ';display: block;');
 }
 
 /*
 * 隐藏
 */
-function _hide(dom) {
-  var oldStyle = dom.getAttribute('style');
-  dom.setAttribute('style', _cutDisplayStyle(oldStyle) + ';display: none;');
+function hide() {
+  var oldStyle = this.getAttribute('style');
+  this.setAttribute('style', _cutDisplayStyle(oldStyle) + ';display: none;');
 }
 
 
@@ -145,26 +146,19 @@ function _hide(dom) {
  */
 
 function layout() {
-  var pc = _getDom('pc');
-  var mobile = _getDom('mobile');
-  var pcHackTop = _getDom('pc-hack-top');
-  var pcHackBottom = _getDom('pc-hack-bottom');
-  var mobileHack = _getDom('mobile-hack');
-  var mobileContent = _getDom('mobile-content');
-  var mobileImg = _getDom('mobile-img');
   if (window.innerWidth <= 1000) {
     document.body.className = 'mobile-body';
-    _hide(pc);
-    _show(mobile);
-    var height = window.innerHeight - mobileHack.clientHeight - mobileImg.clientHeight;
-    mobileContent.setAttribute('style' , 'height:' + height + 'px');
+    $('pc').hide();
+    $('mobile').show();
+    var height = window.innerHeight - $('mobile-hack').clientHeight - $('mobile-img').clientHeight;
+    $('mobile-content').setAttribute('style' , 'height:' + height + 'px');
   } else {
     document.body.className = 'pc-body';
-    _show(pc);
-    _hide(mobile);
+    $('pc').show();
+    $('mobile').hide();
     var hackHeight = (window.innerHeight - 660) / 2;
-    pcHackTop.setAttribute('style', 'height:' + hackHeight + 'px');
-    pcHackBottom.setAttribute('style', 'height:' + hackHeight + 'px');
+    $('pc-hack-top').setAttribute('style', 'height:' + hackHeight + 'px');
+    $('pc-hack-bottom').setAttribute('style', 'height:' + hackHeight + 'px');
   }
 }
 
@@ -194,26 +188,24 @@ function htmlFontSize() {
 */
 
 function withNavigator() {
-  var mobile_android_link = _getDom('mobile-android');
-  var mobile_ios_link = _getDom('mobile-ios');
-  var shadow = _getDom('shadow');
+
   if (navigator.userAgent.indexOf('iPhone') > -1 || navigator.appVersion.indexOf('iPhone') > -1) {
-    _hide(mobile_android_link);
-    _show(mobile_ios_link);
+    $('mobile-android').hide();
+    $('mobile-ios').show();
   } else if (navigator.userAgent.indexOf('iPad') > -1 || navigator.appVersion.indexOf('iPad') > -1) {
-    _hide(mobile_android_link);
-    _show(mobile_ios_link);
+    $('mobile-android').hide();
+    $('mobile-ios').show();
   } else {
-    _show(mobile_android_link);
-    _hide(mobile_ios_link);
+    $('mobile-android').show();
+    $('mobile-ios').hide();
   }
   if (typeof WeixinJSBridge !== 'undefined') {
-    _show(shadow);
+    $('shadow').show();
     setTimeout(function () {
-      _hide(shadow);
+      $('shadow').hide();
     }, 2000);
   } else {
-    _hide(shadow);
+    $('shadow').hide();
   }
 }
 
